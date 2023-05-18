@@ -48,9 +48,9 @@ public abstract class TestBase {
         driver.manage().window().maximize();
         driver.get(BASE_URL);
     }
-    @AfterMethod
-    public void afterMethod(){
-        driver.quit();
-    }
+//    @AfterMethod
+//    public void afterMethod(){
+//        driver.quit();
+//    }
 
 }
