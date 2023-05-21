@@ -92,32 +92,6 @@ public class CustomersPage extends PageBase {
        System.out.println(ActualNoOfRecords);
        return ActualNoOfRecords;
     }
-
-    public void editRecord(String name)
-    {
-        sleep(5000);
-        isElementVisible(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]"));
-        for(int i=0; i< listOfRecordNames.size();i++)
-        {
-            if(listOfRecordNames.get(i).getText().equalsIgnoreCase(name))
-            {
-                edits.get(i).click();
-            }
-        }
-
-
-        isElementVisible(By.xpath(Description));
-        driver.findElement(By.xpath(Description)).click();
-        //driver.findElement(By.xpath(Description)).clear();
-        Actions a = new Actions(driver);
-        a.sendKeys(Keys.chord(Keys.chord(Keys.CONTROL+"A"))).build().perform();
-        //a.sendKeys(Keys.chord(Keys.COMMAND + "A")).build().perform();
-        a.keyDown(Keys.BACK_SPACE).build().perform();
-        driver.findElement(By.xpath(Description)).sendKeys("Edited text");
-        //click(By.xpath(Description));
-        //setText(By.xpath(Description),"edited text");
-    }
-
     public boolean deleteRecord(String name)
     {
         isElementVisible(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]"));

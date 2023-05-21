@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 public class CustomersTests extends TestBase{
 
+    //BATCH29-10
     @Test
     public void addNewCustomer()
     {
@@ -20,6 +21,7 @@ public class CustomersTests extends TestBase{
         Assert.assertTrue(status);
     }
 
+    //BATCH29-13
     @Test
     public void verifyNoOfRecords()
     {
@@ -30,6 +32,7 @@ public class CustomersTests extends TestBase{
         Assert.assertEquals(customersPage.getNumberOfRecords(),customersPage.getActualNumberOfRecords());
     }
 
+    //BATCH29-14
     @Test
     public void verifyNoOfRecordsAfterAddingCustomer()
     {
@@ -43,6 +46,7 @@ public class CustomersTests extends TestBase{
         Assert.assertEquals(DisplayedNumber2,DisplayedNumber1+1);
     }
 
+    //BATCH29-15
     @Test
     public void verifyMandatoryFields()
     {
@@ -54,17 +58,7 @@ public class CustomersTests extends TestBase{
         Assert.assertEquals(message,"Required");
     }
 
-    @Test
-    public void editAddedRecord()
-    {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
-        CustomersPage customersPage = new CustomersPage(driver);
-        customersPage.navigateToCustomer();
-        customersPage.addCustomer("Anoop","Testing ui");
-        customersPage.editRecord("Anoop");
-    }
-
+    //BATCH29-17
     @Test
     public void deleteAddedRecord()
     {
@@ -76,24 +70,4 @@ public class CustomersTests extends TestBase{
         Boolean status = customersPage.deleteRecord("Donald");
         Assert.assertTrue(status);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
