@@ -20,17 +20,18 @@ public class CustomersPage extends PageBase {
         PageFactory.initElements(driver, this);
     }
 
-    private String Time = "//span[text()=\"Time\"]";
-    private String ProjectInfo = "//span[normalize-space()='Project Info']";
-    private String Customers = "//a[text()=\"Customers\"]";
-    private String Add = "//button[normalize-space()='Add']";
-    private String NoOfRecords = "//div[@class=\"orangehrm-horizontal-padding orangehrm-vertical-padding\"]/span";
-    private String Name = "//div[@class=\"oxd-form-row\"]//input";
-    private String Description = "//div[@class=\"oxd-form-row\"]//textarea";
-    private String Save = "//button[@type=\"submit\"]";
-    private String Required = "//div[@class=\"oxd-form-row\"]//span";
-    private String YesDelete = "//div[@class=\"orangehrm-modal-footer\"]//button[2]";
-    private String SuccessMessage = "//div[@class=\"oxd-toast oxd-toast--success oxd-toast-container--toast\"]";
+    private String xpathTime = "//span[text()=\"Time\"]";
+    private String xpathProjectInfo = "//span[normalize-space()='Project Info']";
+    private String xpathCustomers = "//a[text()=\"Customers\"]";
+    private String xpathAddButton = "//button[normalize-space()='Add']";
+    private String xpathNoOfRecords = "//div[@class=\"orangehrm-horizontal-padding orangehrm-vertical-padding\"]/span";
+    private String xpathNameCell = "//div[@class=\"oxd-form-row\"]//input";
+    private String xpathDescriptionCell = "//div[@class=\"oxd-form-row\"]//textarea";
+    private String xpathSaveButton = "//button[@type=\"submit\"]";
+    private String xpathRequiredMessage = "//div[@class=\"oxd-form-row\"]//span";
+    private String xpathYesDeleteButton = "//div[@class=\"orangehrm-modal-footer\"]//button[2]";
+    private String xpathSuccessMessage = "//div[@class=\"oxd-toast oxd-toast--success oxd-toast-container--toast\"]";
+
     @FindBy(xpath = "//div[@class=\"oxd-table-card\"]")
     List<WebElement> lines;
 
@@ -48,42 +49,38 @@ public class CustomersPage extends PageBase {
 
 
     public void navigateToCustomer() {
-        click(By.xpath(Time));
-        click(By.xpath(ProjectInfo));
-        click(By.xpath(Customers));
+        click(By.xpath(xpathTime));
+        click(By.xpath(xpathProjectInfo));
+        click(By.xpath(xpathCustomers));
     }
 
     public boolean addCustomer(String name, String description) {
-        click(By.xpath(Add));
-        setText(By.xpath(Name), name);
-        setText(By.xpath(Description), description);
-        click(By.xpath(Save));
-        return isElementVisible(By.xpath(SuccessMessage));
+        click(By.xpath(xpathAddButton));
+        setText(By.xpath(xpathNameCell), name);
+        setText(By.xpath(xpathDescriptionCell), description);
+        click(By.xpath(xpathSaveButton));
+        return isElementVisible(By.xpath(xpathSuccessMessage));
 
     }
 
     public String mandatoryFields(String description) {
-        click(By.xpath(Add));
-        setText(By.xpath(Description), "Testinggggggg");
-        click(By.xpath(Save));
-        isElementVisible(By.xpath(Required));
-        return driver.findElement(By.xpath(Required)).getText();
-
+        click(By.xpath(xpathAddButton));
+        setText(By.xpath(xpathDescriptionCell), "Testinggggggg");
+        click(By.xpath(xpathSaveButton));
+        isElementVisible(By.xpath(xpathRequiredMessage));
+        return getText(By.xpath(xpathRequiredMessage));
     }
 
     public int getNumberOfRecords() {
-        sleep(3000);
-        isElementVisible(By.xpath(NoOfRecords));
-        String Records = driver.findElement(By.xpath(NoOfRecords)).getText();
-        String name = Records.split(Pattern.quote(")"))[0].split(Pattern.quote("("))[1].trim();
-        int NoOfRecords = Integer.parseInt(name);
-        System.out.println(NoOfRecords);
+        isElementVisible(By.xpath(xpathNoOfRecords));
+        String Records = getText(By.xpath(xpathNoOfRecords));
+        int NoOfRecords = noOfRecords(Records);
         return NoOfRecords;
     }
 
     public int getActualNumberOfRecords() {
         int ActualNoOfRecords = lines.size();
-        System.out.println(ActualNoOfRecords);
+        //System.out.println(ActualNoOfRecords);
         return ActualNoOfRecords;
     }
 
@@ -94,8 +91,8 @@ public class CustomersPage extends PageBase {
                 delete.get(i).click();
             }
         }
-        click(By.xpath(YesDelete));
-        return isElementVisible(By.xpath(SuccessMessage));
+        click(By.xpath(xpathYesDeleteButton));
+        return isElementVisible(By.xpath(xpathSuccessMessage));
     }
 }
 

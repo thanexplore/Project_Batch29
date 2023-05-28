@@ -8,15 +8,19 @@ import org.testng.annotations.Test;
 
 public class CustomersTests extends TestBase {
 
+    String userName = "Admin";
+    String password = "admin123";
     //BATCH29-10
     @Test
     public void addNewCustomer()
     {
+        String name = "Vincent Gomas";
+        String description = "Erp Data Analyst";
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
+        loginPage.login(userName,password,true,null);
         CustomersPage customersPage = new CustomersPage(driver);
         customersPage.navigateToCustomer();
-        Boolean status = customersPage.addCustomer("Anoop Joseph","Flexible pouch manufacturer");
+        Boolean status = customersPage.addCustomer(name,description);
         Assert.assertTrue(status);
     }
 
@@ -25,7 +29,7 @@ public class CustomersTests extends TestBase {
     public void verifyNoOfRecords()
     {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
+        loginPage.login(userName,password,true,null);
         CustomersPage customersPage = new CustomersPage(driver);
         customersPage.navigateToCustomer();
         Assert.assertEquals(customersPage.getNumberOfRecords(),customersPage.getActualNumberOfRecords());
@@ -35,12 +39,14 @@ public class CustomersTests extends TestBase {
     @Test
     public void verifyNoOfRecordsAfterAddingCustomer()
     {
+        String name = "Anthony";
+        String description = "Developer";
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
+        loginPage.login(userName,password,true,null);
         CustomersPage customersPage = new CustomersPage(driver);
         customersPage.navigateToCustomer();
         int DisplayedNumber1 = customersPage.getNumberOfRecords();
-        customersPage.addCustomer("Deepu Joseph","Web developer");
+        customersPage.addCustomer(name,description);
         int DisplayedNumber2 = customersPage.getNumberOfRecords();
         Assert.assertEquals(DisplayedNumber2,DisplayedNumber1+1);
     }
@@ -50,10 +56,10 @@ public class CustomersTests extends TestBase {
     public void verifyMandatoryFields()
     {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
+        loginPage.login(userName,password,true,null);
         CustomersPage customersPage = new CustomersPage(driver);
         customersPage.navigateToCustomer();
-        String message = customersPage.mandatoryFields("Only description");
+        String message = customersPage.mandatoryFields("Only description entered");
         Assert.assertEquals(message,"Required");
     }
 
@@ -61,11 +67,13 @@ public class CustomersTests extends TestBase {
     @Test
     public void deleteAddedRecord()
     {
+        String name = "Donald ";
+        String description = "Business";
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("Admin","admin123",true,null);
+        loginPage.login(userName,password,true,null);
         CustomersPage customersPage = new CustomersPage(driver);
         customersPage.navigateToCustomer();
-        customersPage.addCustomer("Donald", "test");
+        customersPage.addCustomer(name, description);
         Boolean status = customersPage.deleteRecord("Donald");
         Assert.assertTrue(status);
     }
