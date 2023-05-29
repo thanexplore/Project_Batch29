@@ -65,7 +65,7 @@ public class CustomersPage extends PageBase {
 
     public String mandatoryFields(String description) {
         click(By.xpath(xpathAddButton));
-        setText(By.xpath(xpathDescriptionCell), "Testinggggggg");
+        setText(By.xpath(xpathDescriptionCell), description);
         click(By.xpath(xpathSaveButton));
         isElementVisible(By.xpath(xpathRequiredMessage));
         return getText(By.xpath(xpathRequiredMessage));
