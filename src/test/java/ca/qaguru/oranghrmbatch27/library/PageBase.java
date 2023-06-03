@@ -10,6 +10,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,6 +25,7 @@ public abstract class PageBase {
     {
         this.driver = driver;
     }
+
     protected void click(By by) {
         try {
             new WebDriverWait(driver,Duration.ofSeconds(WAIT_TIME))
@@ -347,5 +349,12 @@ public abstract class PageBase {
             scrollInToView(by);
         }
         return null;
+    }
+    //To get the integer value 9 from  the String "(9) Records Found"
+    protected int noOfRecords(String records)
+    {
+        String name = records.split(Pattern.quote(")"))[0].split(Pattern.quote("("))[1].trim();
+        int NoOfRecords = Integer.parseInt(name);
+        return NoOfRecords;
     }
 }
