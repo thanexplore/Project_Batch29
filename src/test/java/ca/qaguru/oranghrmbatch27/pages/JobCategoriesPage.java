@@ -20,10 +20,10 @@ public class JobCategoriesPage extends PageBase {
     private final String categoryHeader = "//h6[text()='Job Categories']";
     private final String addJobCategoryHeader = "//h6[text()='Add Job Category']";
     private final String listOfJobCategories = ".oxd-table-body";
-    private final String categories = "//div[@class='oxd-table-body']/div[@class='oxd-table-card']";
+    private final String jobCategories = "//div[@class='oxd-table-body']/div[@class='oxd-table-card']";
 
-    @FindBy(xpath = categories)
-    private List<WebElement> listCategory;
+    @FindBy(xpath = jobCategories)
+    private List<WebElement> listJobCategories;
 
     public JobCategoriesPage(WebDriver driver) {
         super(driver);
@@ -65,7 +65,7 @@ public class JobCategoriesPage extends PageBase {
 
     public boolean isJobCategoryAdded(String categoryName) {
         isElementVisible(By.cssSelector(listOfJobCategories));
-        for (WebElement category : listCategory) {
+        for (WebElement category : listJobCategories) {
             String categoryText = category.getText();
             if (categoryName.equalsIgnoreCase(categoryText)) {
                 return true;
