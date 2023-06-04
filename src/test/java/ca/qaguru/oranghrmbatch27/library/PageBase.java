@@ -26,6 +26,7 @@ public abstract class PageBase {
         this.driver = driver;
     }
 
+
     protected void click(By by) {
         try {
             new WebDriverWait(driver,Duration.ofSeconds(WAIT_TIME))
