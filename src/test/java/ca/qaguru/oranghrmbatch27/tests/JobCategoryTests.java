@@ -33,8 +33,6 @@ public class JobCategoryTests extends TestBase {
         headerPage.selectMenu(MenuOptions.JOB_CATEGORIES);
         JobCategoriesPage jobCategoriesPage = new JobCategoriesPage(driver);
         Assert.assertEquals(jobCategoriesPage.addJobCategoryheader(), "Add Job Category");
-
-
     }
 
     @Test
