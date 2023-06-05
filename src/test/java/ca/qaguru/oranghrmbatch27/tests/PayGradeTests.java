@@ -47,8 +47,6 @@ public class PayGradeTests extends TestBase {
         navigateToPayGrade();
         PayGradePage payGradePage=new PayGradePage(driver);
         payGradePage.savePayGrade(name);
-        //String successMessage = payGradePage.savePayGrade(name);
-        //System.out.println("XXXXXXXXXXXX : " + successMessage);
     }
 
     private void navigateToPayGrade(){

@@ -7,11 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PayGradePage extends PageBase {
 
-    //WebDriver driver;
-
     public  PayGradePage(WebDriver _driver){
         super(_driver);
-        //this.driver=_driver;
         PageFactory.initElements(_driver, this);
     }
     private String adminMenuPath="//span[text()=\"Admin\"]";
@@ -21,7 +18,8 @@ public class PayGradePage extends PageBase {
     private String payGradeNameTextboxPath="//div[@class=\"oxd-form-row\"]//input";
     private  String saveButtonPath="//button[normalize-space()=\"Save\"]";
     private  String requiredFieldPath="//div[@class=\"oxd-form-row\"]//span";
-    //private String successMessagePath="//div[@class=\"oxd-text oxd-text--p oxd-text--toast-message oxd-toast-content-tex\"]";
+
+    private String successMessagePath="//div[@class=\"oxd-toast-content oxd-toast-content--success\"]";
 
    public void clickPayGradeAddButton(){
         click(By.xpath(adminMenuPath));
@@ -30,12 +28,11 @@ public class PayGradePage extends PageBase {
         click(By.xpath(addButtonPath));
     }
 
-    public void savePayGrade(String payGradeName){
+    public Boolean savePayGrade(String payGradeName){
        setText(By.xpath(payGradeNameTextboxPath),payGradeName);
        click(By.xpath(saveButtonPath));
-       //isElementVisible(By.xpath(successMessagePath));
-       //return getText(By.xpath(successMessagePath));
-    }
+       return isElementVisible(By.xpath(successMessagePath));
+      }
 
     public String checkPayGradeNameFieldIsMandatory(){
         click(By.xpath(saveButtonPath));
