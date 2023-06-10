@@ -13,15 +13,17 @@ public abstract class TestBase {
     //protected  ChromeDriver driver;
     protected String browser;
     protected final String BASE_URL = "https://opensource-demo.orangehrmlive.com";
+
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         WebDriverManager.firefoxdriver().setup();
+        beforeMethod("chrome");
     }
 
-    @BeforeMethod
+   // @BeforeMethod
     @Parameters("browser")
-    public void beforeMethod(@Optional("chrome") String browser){
+    public void beforeMethod(@Optional("chrome") String browser) {
         this.browser = browser;
         System.out.println("Browser : " + browser);
         getDriver();
@@ -32,7 +34,7 @@ public abstract class TestBase {
             case "chrome":
                 //ChromeOptions options = new ChromeOptions();
                 //options.addArguments("--remote-allow-origins=*");
-               // driver = new ChromeDriver(options);
+                // driver = new ChromeDriver(options);
                 driver = new ChromeDriver();
                 break;
             case "firefox":
@@ -48,9 +50,14 @@ public abstract class TestBase {
         driver.manage().window().maximize();
         driver.get(BASE_URL);
     }
-    @AfterMethod
-    public void afterMethod(){
+    // @AfterMethod
+    // public void afterMethod(){
+    //driver.quit();
+    // }
+
+    @AfterSuite
+    public void afterSuite() {
+
         driver.quit();
     }
-
 }

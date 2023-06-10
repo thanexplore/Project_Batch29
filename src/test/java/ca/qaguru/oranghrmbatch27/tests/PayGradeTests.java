@@ -8,51 +8,89 @@ import org.testng.annotations.Test;
 
 public class PayGradeTests extends TestBase {
 
-    String username="Admin";
-    String password="admin123";
-    String alphabetPayGradeName="Grade";
-    String numericPayGradeName="123";
-    String alphaNumericPayGradeName="Grade123";
-    String alphaNumericWithSpacePayGradeName="Grade 123";
+    String username = "Admin";
+    String password = "admin123";
+    String alphabetPayGradeName = "Grade";
+    String numericPayGradeName = "123";
+    String alphaNumericPayGradeName = "Grade321";
+    String alphaNumericWithSpacePayGradeName = "Grade 123";
 
-    @Test
-    public void savePayGradeAlphabetOnly(){
+    @Test(priority = 0)
+    public void savePayGradeAlphabetOnly() {
+        navigateToPayGrade(true);
         savePayGradeSuccessfully(alphabetPayGradeName);
+        deleteRecord(alphabetPayGradeName);
     }
 
-    @Test
-    public void savePayGradeNumericOnly(){
+    @Test(priority = 1)
+    public void savePayGradeNumericOnly() {
         savePayGradeSuccessfully(numericPayGradeName);
+        deleteRecord(numericPayGradeName);
     }
 
-    @Test
-    public void savePayGradeAlphaNumericOnly(){
+    @Test(priority = 3)
+    public void savePayGradeAlphaNumericOnly() {
         savePayGradeSuccessfully(alphaNumericPayGradeName);
+        deleteRecord(alphaNumericPayGradeName);
     }
 
-    @Test
-    public void savePayGradeAlphaNumericWithSpace(){
+    @Test(priority = 2)
+    public void savePayGradeAlphaNumericWithSpace() {
         savePayGradeSuccessfully(alphaNumericWithSpacePayGradeName);
+        deleteRecord(alphaNumericWithSpacePayGradeName);
     }
 
-    @Test
-    public void checkNameFieldIsMandatory(){
-        navigateToPayGrade();
-        PayGradePage payGradePage=new PayGradePage(driver);
-       String errorMessage=payGradePage.checkPayGradeNameFieldIsMandatory();
-        Assert.assertEquals(errorMessage,"Required");
+    @Test(priority = 4)
+    public void checkNameFieldIsMandatory() {
+        navigateToAddPayGrade();
+        PayGradePage payGradePage = new PayGradePage(driver);
+        String errorMessage = payGradePage.checkPayGradeNameFieldIsMandatory();
+        Assert.assertEquals(errorMessage, "Required");
     }
 
-    private void savePayGradeSuccessfully(String name){
-        navigateToPayGrade();
-        PayGradePage payGradePage=new PayGradePage(driver);
-        payGradePage.savePayGrade(name);
-    }
-
-    private void navigateToPayGrade(){
-        LoginPage loginPage=new LoginPage(driver);
-        loginPage.login(username,password,true,null);
-        PayGradePage payGradePage=new PayGradePage(driver);
+    @Test(priority = 5)
+    public void ensureCancelButtonWorking() {
+        PayGradePage payGradePage = new PayGradePage(driver);
+        payGradePage.clickPayGrade();
+        int currentTotalNoOfRecords = payGradePage.totalNoOfPayGrades();
         payGradePage.clickPayGradeAddButton();
+        payGradePage.setPayGrade(alphabetPayGradeName);
+        payGradePage.cancelButton();
+        int newTotalNoOfRecords = payGradePage.totalNoOfPayGrades();
+        Assert.assertEquals(currentTotalNoOfRecords, newTotalNoOfRecords);
+    }
+
+    private void deleteRecord(String name) {
+        PayGradePage payGradePage = new PayGradePage(driver);
+        payGradePage.clickPayGrade();
+        int existingTotalNoOfRecords = payGradePage.totalNoOfPayGrades();
+        payGradePage.deleteButton(name);
+        int afterRecordDeleted = payGradePage.totalNoOfPayGrades();
+        Assert.assertEquals(existingTotalNoOfRecords, afterRecordDeleted + 1);
+    }
+
+    private void savePayGradeSuccessfully(String name) {
+        PayGradePage payGradePage = new PayGradePage(driver);
+        int recordCountBeforeSave = payGradePage.totalNoOfPayGrades();
+        navigateToAddPayGrade();
+        payGradePage.setPayGrade(name);
+        payGradePage.savePayGrade();
+        payGradePage.clickPayGrade();
+        int recordCountAfterSave = payGradePage.totalNoOfPayGrades();
+        Assert.assertEquals(recordCountAfterSave, recordCountBeforeSave + 1);
+    }
+
+    private void navigateToAddPayGrade() {
+        PayGradePage payGradePage = new PayGradePage(driver);
+        payGradePage.clickPayGradeAddButton();
+    }
+
+    private void navigateToPayGrade(boolean isLoginRequired) {
+        if (isLoginRequired == true) {
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.login(username, password, true, null);
+        }
+        PayGradePage payGradePage = new PayGradePage(driver);
+        payGradePage.clickPayGrade();
     }
 }
