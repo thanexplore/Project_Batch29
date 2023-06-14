@@ -24,24 +24,28 @@ public class PayGradeTests extends TestBase {
 
     @Test(priority = 1)
     public void savePayGradeNumericOnly() {
+        navigateToPayGrade(true);
         savePayGradeSuccessfully(numericPayGradeName);
         deleteRecord(numericPayGradeName);
     }
 
     @Test(priority = 3)
     public void savePayGradeAlphaNumericOnly() {
+        navigateToPayGrade(true);
         savePayGradeSuccessfully(alphaNumericPayGradeName);
         deleteRecord(alphaNumericPayGradeName);
     }
 
     @Test(priority = 2)
     public void savePayGradeAlphaNumericWithSpace() {
+        navigateToPayGrade(true);
         savePayGradeSuccessfully(alphaNumericWithSpacePayGradeName);
         deleteRecord(alphaNumericWithSpacePayGradeName);
     }
 
     @Test(priority = 4)
     public void checkNameFieldIsMandatory() {
+        navigateToPayGrade(true);
         navigateToAddPayGrade();
         PayGradePage payGradePage = new PayGradePage(driver);
         String errorMessage = payGradePage.checkPayGradeNameFieldIsMandatory();
@@ -50,6 +54,7 @@ public class PayGradeTests extends TestBase {
 
     @Test(priority = 5)
     public void ensureCancelButtonWorking() {
+        navigateToPayGrade(true);
         PayGradePage payGradePage = new PayGradePage(driver);
         payGradePage.clickPayGrade();
         int currentTotalNoOfRecords = payGradePage.totalNoOfPayGrades();

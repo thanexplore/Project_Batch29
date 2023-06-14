@@ -18,10 +18,9 @@ public abstract class TestBase {
     public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         WebDriverManager.firefoxdriver().setup();
-        beforeMethod("chrome");
     }
 
-   // @BeforeMethod
+    @BeforeMethod
     @Parameters("browser")
     public void beforeMethod(@Optional("chrome") String browser) {
         this.browser = browser;
@@ -50,14 +49,9 @@ public abstract class TestBase {
         driver.manage().window().maximize();
         driver.get(BASE_URL);
     }
-    // @AfterMethod
-    // public void afterMethod(){
-    //driver.quit();
-    // }
 
-    @AfterSuite
-    public void afterSuite() {
-
+    @AfterMethod
+    public void afterMethod() {
         driver.quit();
     }
 }

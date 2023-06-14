@@ -29,6 +29,8 @@ public class PayGradePage extends PageBase {
     private String yesDeleteButtonXpath = "//div[@class=\"orangehrm-modal-footer\"]//button[2]";
     private String xpathSuccessMessage = "//div[@class=\"oxd-toast oxd-toast--success oxd-toast-container--toast\"]";
 
+    private String editButtonXpath="//i[@class=\"oxd-icon bi-pencil-fill\"]";
+
     @FindBy(xpath = "//div[@class=\"oxd-table-body\"] //div[@class=\"oxd-table-cell oxd-padding-cell\"][2]")
     List<WebElement> listOfRecordNames;
 
@@ -74,7 +76,7 @@ public class PayGradePage extends PageBase {
     }
 
     public boolean deleteButton(String name) {
-        isElementVisible(By.xpath("//i[@class=\"oxd-icon bi-pencil-fill\"]"));
+        isElementVisible(By.xpath(editButtonXpath));
         for (int i = 0; i < listOfRecordNames.size(); i++) {
             if (listOfRecordNames.get(i).getText().equalsIgnoreCase(name)) {
                 delete.get(i).click();
